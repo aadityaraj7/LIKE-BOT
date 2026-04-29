@@ -34,15 +34,17 @@ HEADERS = {
 last_commit_times = {zone: None for zone in ZONES}
 
 
+# token_manager.py (Same as before, just ensure notify_discord doesn't fail)
 def notify_discord(message: str):
-    """Send a notification to Discord via webhook."""
+    """Send a notification to Webhook (Optional)."""
     if not WEEBOOK_URL:
-        print("[Discord] Notification skipped.")
+        print(f"[Log] {message}") # Agar webhook nahi hai toh console mein print karega
         return
     try:
         requests.post(WEEBOOK_URL, json={"content": message}, timeout=5)
     except Exception as e:
-        print(f"[Discord] Error: {e}")
+        print(f"[Notify Error] {e}")
+
 
 
 async def get_github_file_content(session, repo: str, path: str):
